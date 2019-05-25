@@ -1,51 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="482255e5-1427-43a3-b26c-97f91778ccea" name="Default Changelist" comment="" />
+    <list default="true" id="482255e5-1427-43a3-b26c-97f91778ccea" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Clips/rules.clp" beforeDir="false" afterPath="$PROJECT_DIR$/../Clips/rules.clp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/MidiParser.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/MidiParser.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="-797228372">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.0" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/midi.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-              <folding>
-                <element signature="e#45#96#0" />
-                <element signature="e#113#464#0" />
-                <element signature="e#540#894#0" />
-                <element signature="e#1119#5101#0" />
-                <element signature="e#6375#6658#0" />
-                <element signature="e#6338#6640#0" />
-                <element signature="e#6298#6461#0" />
-                <element signature="e#6296#6464#0" />
-                <element signature="e#6510#6829#0" />
-                <element signature="e#2498#2836#0" />
-                <element signature="e#2899#3242#0" />
-                <element signature="e#2581#2860#0" />
-                <element signature="e#3737#4079#0" />
-                <element signature="e#4143#4475#0" />
-                <element signature="e#4547#4880#0" />
-                <element signature="e#5036#5372#0" />
-                <element signature="e#5436#5709#0" />
-                <element signature="e#9222#9284#0" />
-                <element signature="e#5913#6307#0" />
-                <element signature="e#6433#7095#0" />
-                <element signature="e#10900#11706#0" />
-                <element signature="e#8192#8787#0" />
-                <element signature="e#12148#12226#0" />
-                <element signature="e#12315#12379#0" />
-                <element signature="e#12421#12485#0" />
-                <element signature="e#14055#14687#0" />
-                <element signature="e#14931#14942#0" />
-                <element signature="e#16399#16410#0" />
-                <element signature="e#16280#16767#0" />
-              </folding>
+            <state relative-caret-position="569">
+              <caret line="366" column="18" lean-forward="true" selection-start-line="366" selection-start-column="18" selection-end-line="366" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -70,6 +56,7 @@
       <find>print</find>
       <find>output</find>
       <find>velocity': 0</find>
+      <find>write</find>
     </findStrings>
     <replaceStrings>
       <replace>[&quot;eventType&quot;][&quot;eventCode&quot;]</replace>
@@ -79,6 +66,9 @@
       <replace>&quot;Delta&quot;</replace>
       <replace>midi.txt</replace>
     </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -92,14 +82,16 @@
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="10" />
     <option name="y" value="20" />
-    <option name="width" value="1346" />
-    <option name="height" value="728" />
+    <option name="width" value="1347" />
+    <option name="height" value="729" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -111,14 +103,13 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last.edited.regexp" value="" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/midi.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -175,49 +166,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration default="true" type="Tox" factoryName="Tox">
-      <module name="MidiParser" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="tests" factoryName="Doctests">
-      <module name="MidiParser" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_SCRIPT" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="tests" factoryName="Unittests">
-      <module name="MidiParser" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
-      <method v="2" />
-    </configuration>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -233,14 +181,12 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="true" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.24962178" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.24917382" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection Results" weight="0.32961783" />
-      <window_info anchor="bottom" id="Version Control" order="0" />
+      <window_info anchor="bottom" id="Version Control" order="0" show_stripe_button="false" />
       <window_info anchor="bottom" id="Python Console" order="1" weight="0.32961783" />
       <window_info anchor="bottom" id="Terminal" order="2" weight="0.32961783" />
       <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" weight="0.32961783" />
@@ -250,11 +196,15 @@
       <window_info anchor="bottom" id="Cvs" order="7" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="8" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="9" />
+      <window_info anchor="bottom" id="Inspection Results" order="10" weight="0.32961783" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info active="true" anchor="right" id="Run" order="3" visible="true" weight="0.2730711" />
     </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -268,23 +218,9 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../AppData/Local/Programs/Python/Python37-32/Lib/codecs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="309" selection-start-line="309" selection-end-line="309" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/clips.clp">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/output.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="6" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../AppData/Local/Programs/Python/Python37-32/Lib/codecs.py" />
+    <entry file="file://$PROJECT_DIR$/clips.clp" />
+    <entry file="file://$PROJECT_DIR$/output.txt" />
     <entry file="file://$PROJECT_DIR$/MIDI_sample.mid">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -301,39 +237,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/midi.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-          <folding>
-            <element signature="e#45#96#0" />
-            <element signature="e#113#464#0" />
-            <element signature="e#540#894#0" />
-            <element signature="e#1119#5101#0" />
-            <element signature="e#6375#6658#0" />
-            <element signature="e#6338#6640#0" />
-            <element signature="e#6298#6461#0" />
-            <element signature="e#6296#6464#0" />
-            <element signature="e#6510#6829#0" />
-            <element signature="e#2498#2836#0" />
-            <element signature="e#2899#3242#0" />
-            <element signature="e#2581#2860#0" />
-            <element signature="e#3737#4079#0" />
-            <element signature="e#4143#4475#0" />
-            <element signature="e#4547#4880#0" />
-            <element signature="e#5036#5372#0" />
-            <element signature="e#5436#5709#0" />
-            <element signature="e#9222#9284#0" />
-            <element signature="e#5913#6307#0" />
-            <element signature="e#6433#7095#0" />
-            <element signature="e#10900#11706#0" />
-            <element signature="e#8192#8787#0" />
-            <element signature="e#12148#12226#0" />
-            <element signature="e#12315#12379#0" />
-            <element signature="e#12421#12485#0" />
-            <element signature="e#14055#14687#0" />
-            <element signature="e#14931#14942#0" />
-            <element signature="e#16399#16410#0" />
-            <element signature="e#16280#16767#0" />
-          </folding>
+        <state relative-caret-position="569">
+          <caret line="366" column="18" lean-forward="true" selection-start-line="366" selection-start-column="18" selection-end-line="366" selection-end-column="18" />
         </state>
       </provider>
     </entry>

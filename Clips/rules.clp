@@ -1,3 +1,11 @@
+
+(deftemplate user_event
+    (slot order (type INTEGER))
+    (slot tip (type STRING))
+	(multislot set) 
+    (multislot data)
+)
+
 (deffacts initialFact
 	(menu)
 	
@@ -12,7 +20,7 @@
 	=>
 	(clear-window)
 	(printout t " 1 ► Statistici note" crlf)
-	(printout t " 2 ► " crlf)
+	(printout t " 2 ► Gasiti o anumite secventa" crlf)
 	(printout t " 3 ► " crlf)
 	(printout t " 4 ► " crlf)
 	(printout t " 5 ► " crlf)
@@ -172,3 +180,53 @@
 
 )
 
+(defrule executeCommand1
+	?x <- (command 2)
+	=>
+	(clear-window)
+	(printout t " ♦ Introduceti numarul de note urmate de informatiile fiecarei note pe cate un rand" crlf)
+	(assert(nr_note (read)))
+	(retract ?x)
+)
+
+(defrule copyNrNote
+	(nr_note ?n)
+	=>
+	(assert (copy_nr_note ?n))
+)
+
+(defrule readNotes
+	?nr <- (copy_nr_note ?n1&:(<> ?n1 0))
+	(nr_note ?n2)
+	=>
+	(assert ( user_event (order (- ?n2 ?n1)) (tip (read)) (set nil) (data (read) (read) (read)) ))
+	(retract ?nr)
+	(assert (copy_nr_note (- ?n1 1)))
+)
+
+(defrule matchFirst
+	?f <- (user_event (order ?o1&:(eq ?o1 0)) (tip ?t1) (set nil) (data ?x ?y ?z))
+	(event (order ?o2) (trackID ?t2) (tip ?t)  (delta ?) (data ?x ?y ?z))
+	=>
+	(retract ?f)
+	(assert (user_event (order ?o2) (tip ?t1) (set ?t2 ?o1) (data ?x ?y ?z)) )
+)
+
+(defrule findSequence
+	(nr_note ?n)
+	(user_event (order ?o1) (tip ?t1) (set ?t2 ?o2) (data ?x ?y ?z))
+	(not (exists (user_event (order ?o3&:(<> ?o3 0)) (tip ?t3) (data ?x1 ?y1 ?z1))
+				(event (order ?o4&:(eq ?o4 (+ ?o2 ?o3))) (trackID ?t2) (tip ?t4) (data ?x2 ?y2 ?z2&:(or (neq ?t3 ?t4) (<> ?x1 ?x2) (<> ?y1 ?y2) (<> ?z1 ?z2))  ))))
+	=>
+	(printout t " ♦ it exists " ?t2 ", " ?o2 crlf)
+)
+
+(defrule resetElement
+	(nr_note ?n)
+	?u <- (user_event (order ?o1) (tip ?t1) (set ?t2 ?o2) (data ?x ?y ?z))
+	(exists (user_event (order ?o3&:(<> ?o3 0)) (tip ?t3) (data ?x1 ?y1 ?z1))
+			(event (order ?o4&:(eq ?o4 (+ ?o2 ?o3))) (trackID ?t2) (tip ?t4) (data ?x2 ?y2 ?z2&:(or (neq ?t3 ?t4) (<> ?x1 ?x2) (<> ?y1 ?y2) (<> ?z1 ?z2))  )))
+	=>
+	(retract ?u)
+	(assert (user_event (order ?o1) (tip ?t1) (data ?x ?y ?z)) )
+)
