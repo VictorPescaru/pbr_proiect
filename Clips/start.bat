@@ -1,0 +1,5 @@
+(clear)
+(load facts.clp)
+(load rules.clp)
+(reset)
+(run)
