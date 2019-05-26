@@ -202,13 +202,15 @@
 	(assert ( user_event (order (- ?n2 ?n1)) (tip (read)) (set nil) (data (read) (read) (read)) ))
 	(retract ?nr)
 	(assert (copy_nr_note (- ?n1 1)))
+	(assert (state 1))
 )
 
 (defrule matchFirst
+	(state ?s&:(eq ?s 1))
 	?f <- (user_event (order ?o1&:(eq ?o1 0)) (tip ?t1) (set nil) (data ?x ?y ?z))
 	(event (order ?o2) (trackID ?t2) (tip ?t)  (delta ?) (data ?x ?y ?z))
 	=>
-	(printout t "ajuns matrchFIrst " ?t2 ", " ?o2 crlf)
+	(printout t "match " ?t2 ", " ?o2 crlf)
 	(retract ?f)
 	(assert (user_event (order ?o1) (tip ?t1) (set ?t2 ?o2) (data ?x ?y ?z)) )
 )
@@ -220,7 +222,20 @@
 				(event (order ?o4&:(eq ?o4 (+ ?o2 ?o3))) (trackID ?t2) (tip ?t4) (data ?x2 ?y2 ?z2&:(or (neq ?t3 ?t4) (<> ?x1 ?x2) (<> ?y1 ?y2) (<> ?z1 ?z2))  ))))
 	=>
 	(printout t " it exists " ?t2 ", " ?o2 crlf)
+	(assert (idx 0))
 )
+
+(defrule printSequence
+	?aux <- (idx ?i&:(<> ?i 5))
+	(nr_note ?n)
+	(user_event (order ?o1&:(eq 0 ?o1))  (set ?t2 ?o2) )
+	(event (order ?o3&:(eq ?o3 (+ ?o2 ?n ?i))) (trackID ?t2) (data ?x ?y ?z))
+	=>
+	(printout t " nota " ?x ", " ?y ", " ?z crlf)
+	(retract ?aux)
+	(assert (idx (+ ?i 1)))
+)
+	
 
 (defrule resetElement
 	(nr_note ?n)
@@ -228,6 +243,7 @@
 	(exists (user_event (order ?o3&:(<> ?o3 0)) (tip ?t3) (data ?x1 ?y1 ?z1))
 			(event (order ?o4&:(eq ?o4 (+ ?o2 ?o3))) (trackID ?t2) (tip ?t4) (data ?x2 ?y2 ?z2&:(or (neq ?t3 ?t4) (<> ?x1 ?x2) (<> ?y1 ?y2) (<> ?z1 ?z2))  )))
 	=>
+	(printout t " reset " crlf)	
 	(retract ?u)
-	(assert (user_event (order ?o1) (tip ?t1) (data ?x ?y ?z)) )
+	(assert (user_event (order ?o1) (set nil) (tip ?t1) (data ?x ?y ?z)) )
 )
