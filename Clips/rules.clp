@@ -208,8 +208,9 @@
 	?f <- (user_event (order ?o1&:(eq ?o1 0)) (tip ?t1) (set nil) (data ?x ?y ?z))
 	(event (order ?o2) (trackID ?t2) (tip ?t)  (delta ?) (data ?x ?y ?z))
 	=>
+	(printout t "ajuns matrchFIrst " ?t2 ", " ?o2 crlf)
 	(retract ?f)
-	(assert (user_event (order ?o2) (tip ?t1) (set ?t2 ?o1) (data ?x ?y ?z)) )
+	(assert (user_event (order ?o1) (tip ?t1) (set ?t2 ?o2) (data ?x ?y ?z)) )
 )
 
 (defrule findSequence
@@ -218,7 +219,7 @@
 	(not (exists (user_event (order ?o3&:(<> ?o3 0)) (tip ?t3) (data ?x1 ?y1 ?z1))
 				(event (order ?o4&:(eq ?o4 (+ ?o2 ?o3))) (trackID ?t2) (tip ?t4) (data ?x2 ?y2 ?z2&:(or (neq ?t3 ?t4) (<> ?x1 ?x2) (<> ?y1 ?y2) (<> ?z1 ?z2))  ))))
 	=>
-	(printout t " ♦ it exists " ?t2 ", " ?o2 crlf)
+	(printout t " it exists " ?t2 ", " ?o2 crlf)
 )
 
 (defrule resetElement
