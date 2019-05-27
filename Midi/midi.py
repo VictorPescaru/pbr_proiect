@@ -1,5 +1,5 @@
+import sys
 import re
-
 #clipspath = r"D:\Info\I3b\Programare bazata pe reguli\Clips\Proiect\facts.clp"
 clipspath = r"..\Clips\facts.clp"
 def readFile(filename, mode):
@@ -420,7 +420,10 @@ def switchEventCode(line, eventCode):
 
 def main():
     outputFile = open("midi.txt", "w")
-    midiFile = readFile("MIDI_sample.mid", "rb")
+    midiSource = "MIDI_SAMPLE.mid"
+    if len(sys.argv) == 2:
+        midiSource = sys.argv[1]
+    midiFile = readFile(midiSource, "rb")
     header = readHeader(midiFile)
     print(header, file=outputFile)
     tracks = readTracks(midiFile, header["data"]["tracks"])
