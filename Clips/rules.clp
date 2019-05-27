@@ -15,6 +15,7 @@
 ?*iterator3* = 0 
 ?*iterator4* = 0 
 ?*iterator5* = 0 
+?*iterator6* = 0
 )
 
 (defrule menu
@@ -24,7 +25,8 @@
 	(printout t " 1 ► Statistici note" crlf)
 	(printout t " 2 ► Gasiti o anumita secventa" crlf)
 	(printout t " 3 ► Durate " crlf)
-	(printout t " 4 ► Exit" crlf)
+	(printout t " 4 ► Apartenenta gen " crlf)
+	(printout t " 5 ► Exit" crlf)
 
 	(printout t crlf crlf " Optiune → ")
 	(assert(command (read)))
@@ -251,8 +253,8 @@
 	(retract ?a)
 	(assert (backToMenu))
 )
-(defrule executeCommand4
-	?a <- (command 4)
+(defrule executeCommand5
+	?a <- (command 5)
 	=>
 	(clear-window)
 )
@@ -412,10 +414,53 @@
 	=>
 	(printout t "   Note in total → " ?*iterator4* crlf)
 	(printout t "   Total durata  → " ?*iterator3* " units" crlf)
-	(printout t "   Medie durata  → " (/ ?*iterator3* ?*iterator4* ) " units" crlf)
+	(bind ?*iterator6* (/ ?*iterator3* ?*iterator4* ))
+	(printout t "   Medie durata  → " ?*iterator6* " units" crlf)
 	(retract ?a)
 	(assert (backToMenu))
 
+)
+(defrule executeCommand4
+	?x <- (command 4)
+	=>
+	(assert (apartenentaGen))
+)
+(defrule apartenentaGen
+	?a <- (apartenentaGen)
+	=>
+	(retract ?a)
+	(if
+		(= ?*iterator6* 0)
+			then
+			(printout t "Ruleaza media duratelor intai" crlf)
+			else
+			(if
+				(and (< 60 ?*iterator6*) (< ?*iterator6* 90))
+				then
+				(printout "Dub" crlf)
+				else
+				(if
+					(and (< 115 ?*iterator6*) (< ?*iterator6* 130))
+					then
+					(printout "House" crlf)
+					else
+					(if
+						(and (< 200 ?*iterator6*) (< ?*iterator6* 240))
+						then
+						(printout  t "Jazz" crlf)
+					
+					
+					)
+			
+			
+				)
+			
+			
+			)
+	
+	
+	
+	)
 )
 
 
