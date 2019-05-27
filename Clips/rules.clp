@@ -258,10 +258,10 @@
 	(event (order ?o2) (trackID ?t2) (tip ?t)  (delta ?) (data ?x ?y ?z))
 	(not (user_event (order ?o1) (tip ?t1) (set $?d1 ?t2 ?o2 $?d2) (data ?x ?y ?z)))
 	=>
-	(printout t "match " ?t2 ", " ?o2 crlf)
 	(retract ?f)
 	(assert (user_event (order ?o1) (tip ?t1) (set ?t2 ?o2 $?data) (data ?x ?y ?z)) )
 )
+
 (defrule tranzitie_12
 	(declare (salience -10))
 	?s <- (state 1)
@@ -276,10 +276,19 @@
 	(event (order ?o4&:(= ?o4 (+ ?o2 ?o3))) (trackID ?t2) (tip ?t4) (data ?x2 ?y2 ?z2) )
 	(test (or (neq ?x1 ?x2) (neq ?y1 ?y2) (neq ?z1 ?z2)))
 	=>
-	(printout t " reset order " ?o2 " " ?o4 ", x: " ?x2 " ? " ?x1 ", y: " ?y2 " ? " ?y1 ", z: " ?z2 " ? " ?z1 crlf)	
 	(retract ?u)
 	(assert (user_event (order ?o1) (set $?data) (tip ?t1) (data ?x ?y ?z)) )
 )
+
+(defrule notFound
+	(state 2)
+	?u <- (user_event (order 0) (tip ?t1) (set $?data) (data ?x ?y ?z))
+	(test (eq (length$ $?data) 0))
+	=>
+	(printout t "Not found " ?o3 crlf)
+
+)
+
 (defrule tranzitie_23
 	(declare (salience -10))
 	?s <- (state 2)
@@ -300,11 +309,27 @@
 	(assert (idx (+ ?i 1)))
 	
 )
+
+(defrule retractUseEvents
+	(declare (salience -20))	
+	(state 3)
+	?u <- (user_event)
+	=>
+	(retract ?u)
+)
+	
+
 (defrule command2ReturnToMenu
 	(declare (salience -50))
 	?a <- (nr_note ?n)
+	?i <- (idx ?)
+	?s <- (state ?)
+	?cn <- (copy_nr_note ?)
 	=>
 	(retract ?a)
+	(retract ?i)
+	(retract ?s)
+	(retract ?cn)
 	(assert (backToMenu))
 )
 

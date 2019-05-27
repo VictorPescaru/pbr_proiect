@@ -1,0 +1,37 @@
+Optiunea de gasire a unei secvente primeste input de forma:
+n - nr de note din secventa data
+tip (NoteOn/NoteOff)
+canal
+nota
+velocitate
+
+Ouputul va fi urmatoarele 5 note dupa secventa data, daca aceasta apare in piesa
+
+exemplu 1:
+2
+NoteOn
+1
+45
+78
+NoteOff
+1
+45
+64
+
+exemplu 2:
+3
+NoteOn
+1
+45
+78
+NoteOff
+1
+45
+64
+NoteOn
+1
+45
+80
+
+Observatie: desi exemplu 2 incepe la fel ca exemplu 1, secventa a doua va fi gasita in alt loc in piesa decat prima
+secventa deoarece are o nota in plus care nu se potriveste in locul in care este gasita prima secventa
