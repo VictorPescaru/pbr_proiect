@@ -221,11 +221,12 @@
 	
 
 )
+
 (defrule executeCommand2
 	?x <- (command 2)
 	=>
 	(clear-window)
-	(printout t " ♦ Introduceti numarul de note urmate de informatiile fiecarei note pe cate un rand" crlf  "Numar note → ")
+	(printout t " ♦ Introduceti numarul de note urmate de informatiile fiecarei note pe cate un rand" crlf  " Numar note → ")
 	(assert(nr_note (read)))
 	(retract ?x)
 )
@@ -252,42 +253,52 @@
 	(assert (state 1))
 )
 (defrule matchFirst
-	(state ?s&:(eq ?s 1))
-	?f <- (user_event (order ?o1&:(eq ?o1 0)) (tip ?t1) (set nil) (data ?x ?y ?z))
+	(state 1)
+	?f <- (user_event (order ?o1&:(eq ?o1 0)) (tip ?t1) (set $?data) (data ?x ?y ?z))
 	(event (order ?o2) (trackID ?t2) (tip ?t)  (delta ?) (data ?x ?y ?z))
+	(not (user_event (order ?o1) (tip ?t1) (set $?d1 ?t2 ?o2 $?d2) (data ?x ?y ?z)))
 	=>
 	(printout t "match " ?t2 ", " ?o2 crlf)
 	(retract ?f)
-	(assert (user_event (order ?o1) (tip ?t1) (set ?t2 ?o2) (data ?x ?y ?z)) )
+	(assert (user_event (order ?o1) (tip ?t1) (set ?t2 ?o2 $?data) (data ?x ?y ?z)) )
 )
-(defrule findSequence
-	(nr_note ?n)
-	(user_event (order ?o1) (tip ?t1) (set ?t2 ?o2) (data ?x ?y ?z))
-	(not (exists (user_event (order ?o3&:(<> ?o3 0)) (tip ?t3) (data ?x1 ?y1 ?z1))
-				(event (order ?o4&:(eq ?o4 (+ ?o2 ?o3))) (trackID ?t2) (tip ?t4) (data ?x2 ?y2 ?z2&:(or (neq ?t3 ?t4) (<> ?x1 ?x2) (<> ?y1 ?y2) (<> ?z1 ?z2))  ))))
+(defrule tranzitie_12
+	(declare (salience -10))
+	?s <- (state 1)
 	=>
-	(printout t " it exists " ?t2 ", " ?o2 crlf)
+	(retract ?s)
+	(assert (state 2))
+)
+(defrule resetElement
+	(state 2)
+	?u <- (user_event (order ?o1) (tip ?t1) (set ?t2 ?o2 $?data) (data ?x ?y ?z))
+	(user_event (order ?o3&:(<> ?o3 0)) (tip ?t3) (data ?x1 ?y1 ?z1))
+	(event (order ?o4&:(= ?o4 (+ ?o2 ?o3))) (trackID ?t2) (tip ?t4) (data ?x2 ?y2 ?z2) )
+	(test (or (neq ?x1 ?x2) (neq ?y1 ?y2) (neq ?z1 ?z2)))
+	=>
+	(printout t " reset order " ?o2 " " ?o4 ", x: " ?x2 " ? " ?x1 ", y: " ?y2 " ? " ?y1 ", z: " ?z2 " ? " ?z1 crlf)	
+	(retract ?u)
+	(assert (user_event (order ?o1) (set $?data) (tip ?t1) (data ?x ?y ?z)) )
+)
+(defrule tranzitie_23
+	(declare (salience -10))
+	?s <- (state 2)
+	=>
+	(retract ?s)
+	(assert (state 3))
 	(assert (idx 0))
 )
 (defrule printSequence
+	(state 3)
 	?aux <- (idx ?i&:(<> ?i 5))
 	(nr_note ?n)
-	(user_event (order ?o1&:(eq 0 ?o1))  (set ?t2 ?o2) )
+	(user_event (order ?o1&:(eq 0 ?o1))  (set ?t2 ?o2 $?data) )
 	(event (order ?o3&:(eq ?o3 (+ ?o2 ?n ?i))) (trackID ?t2) (data ?x ?y ?z))
 	=>
-	(printout t " nota " ?x ", " ?y ", " ?z crlf)
+	(printout t " nota " ?x ", " ?y ", " ?z " cu ord " ?o3 crlf)
 	(retract ?aux)
 	(assert (idx (+ ?i 1)))
-)
-(defrule resetElement
-	(nr_note ?n)
-	?u <- (user_event (order ?o1) (tip ?t1) (set ?t2 ?o2) (data ?x ?y ?z))
-	(exists (user_event (order ?o3&:(<> ?o3 0)) (tip ?t3) (data ?x1 ?y1 ?z1))
-			(event (order ?o4&:(eq ?o4 (+ ?o2 ?o3))) (trackID ?t2) (tip ?t4) (data ?x2 ?y2 ?z2&:(or (neq ?t3 ?t4) (<> ?x1 ?x2) (<> ?y1 ?y2) (<> ?z1 ?z2))  )))
-	=>
-	(printout t " reset " crlf)	
-	(retract ?u)
-	(assert (user_event (order ?o1) (set nil) (tip ?t1) (data ?x ?y ?z)) )
+	
 )
 (defrule command2ReturnToMenu
 	(declare (salience -50))
@@ -296,11 +307,7 @@
 	(retract ?a)
 	(assert (backToMenu))
 )
-(defrule executeCommand5
-	?a <- (command 5)
-	=>
-	(clear-window)
-)
+
 
 (defrule executeCommand3
 	?x <- (command 3)
@@ -452,6 +459,7 @@
 	)
 )
 (defrule durataMedieMelodiei3
+
 	(declare (salience -100))
 	?a <-(durataMedieAMelodiei)
 	=>
@@ -463,6 +471,7 @@
 	(assert (backToMenu))
 
 )
+
 (defrule executeCommand4
 	?x <- (command 4)
 	=>
@@ -531,6 +540,13 @@
 	(printout t " Ruleaza statistica pentru tempo" crlf)
 	;(retract ?a)
 	(assert (backToMenu))
+)
+
+
+(defrule executeCommand5
+	?a <- (command 5)
+	=>
+	(clear-window)
 )
 (defrule executeCommandNone
 	?a <- (command ?alfa&~1&~2&~3&~4&~5)
