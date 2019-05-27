@@ -16,6 +16,7 @@
 ?*iterator4* = 0 
 ?*iterator5* = 0 
 ?*iterator6* = 0
+?*bpm* = 0
 )
 
 (defrule menu
@@ -56,6 +57,8 @@
 	(printout t "   1 ► Total note apasate " crlf)
 	(printout t "   2 ► Nota specifica " crlf)
 	(printout t "   3 ► Note de tip" crlf)
+	(printout t "   4 ► Masura" crlf)
+	(printout t "   5 ► Tempo" crlf)
 	(printout t crlf "   Optiune → ")
 	(assert(command1 (read)))
 	(retract ?x)
@@ -178,6 +181,46 @@
 
 )
 
+(defrule executeCommand1_4
+	?x <- (command1 4)
+	=>
+	(assert (masura))
+	(bind ?*iterator1* 0)
+	(retract ?x)
+)
+(defrule masura
+	?a <- (masura)
+	(event (order ?order) (trackID ?trackID) (delta ?delta) (tip "TimeSignature") (data ?d1 ?d2 ?d3 ?d4))
+	=>
+	(printout t crlf "   Numberator : "?d1 crlf
+				"   Denominator : "?d2 crlf 
+				"   MIDI Clocks per metronome click : "?d3 crlf
+				"   Number of 1/32 notes per 24 MIDI clocks : "?d4 crlf
+				"   Masura : " ?d1 "/" (* ?d2 ?d2) crlf
+	)
+	(retract ?a)
+	(assert (backToMenu))
+)
+
+(defrule executeCommand1_5
+	?x <- (command1 5)
+	=>
+	(assert (tempo))
+	(bind ?*iterator1* 0)
+	(retract ?x)
+)
+(defrule tempo
+	?a <- (tempo)
+	(event (order ?order) (trackID ?trackID) (delta ?delta) (tip "SetTempo") (data ?d1))
+	=>
+	(bind ?*iterator1* ( / 60000000 ?d1))
+	(printout t "   Tempo : " ?*iterator1* crlf)
+	(assert (tempoEqualsTo ?*iterator1*))
+	(retract ?a)
+	(assert (backToMenu))
+	
+
+)
 (defrule executeCommand2
 	?x <- (command 2)
 	=>
@@ -427,45 +470,70 @@
 )
 (defrule apartenentaGen
 	?a <- (apartenentaGen)
+	?b <- (tempoEqualsTo ?tempo)
 	=>
-	(retract ?a)
-	(if
-		(= ?*iterator6* 0)
+	
+	(if 
+		(and (<= 60 ?tempo) (<= ?tempo 90))
 			then
-			(printout t "Ruleaza media duratelor intai" crlf)
-			else
-			(if
-				(and (< 60 ?*iterator6*) (< ?*iterator6* 90))
-				then
-				(printout "Dub" crlf)
-				else
-				(if
-					(and (< 115 ?*iterator6*) (< ?*iterator6* 130))
-					then
-					(printout "House" crlf)
-					else
-					(if
-						(and (< 200 ?*iterator6*) (< ?*iterator6* 240))
+				 (printout t "Dub" crlf)
+				 else
+				 (if 
+					(and (<= 120 ?tempo) (<= ?tempo 140))
 						then
-						(printout  t "Jazz" crlf)
-					
-					
-					)
-			
-			
+							 (printout t "Techo/trance" crlf)
+							 else
+							 (if 
+								(and (<= 160 ?tempo) (<= ?tempo 180))
+									then
+										 (printout t "Drum and bass" crlf)
+							 )
 				)
-			
-			
-			)
-	
-	
-	
 	)
+	
+	; (if
+		; (= ?*iterator6* 0)
+			; then
+			; (printout t "Ruleaza media duratelor intai" crlf)
+			; else
+			; (if
+				; (and (< 60 ?*iterator6*) (< ?*iterator6* 90))
+				; then
+				; (printout "Dub" crlf)
+				; else
+				; (if
+					; (and (< 115 ?*iterator6*) (< ?*iterator6* 130))
+					; then
+					; (printout "House" crlf)
+					; else
+					; (if
+						; (and (< 200 ?*iterator6*) (< ?*iterator6* 240))
+						; then
+						; (printout  t "Jazz" crlf)
+					
+					
+					; )
+			
+			
+				; )
+			
+			; )
+
+	; )
+	(retract ?a)
+	;(retract ?b)
+	(assert (backToMenu))
 )
-
-
+(defrule apartenentaGen2
+	?a <- (apartenentaGen)
+	(not(tempoEqualsTo ?tempo))
+	=>
+	(printout t " Ruleaza statistica pentru tempo" crlf)
+	;(retract ?a)
+	(assert (backToMenu))
+)
 (defrule executeCommandNone
-	?a <- (command ?alfa&~1&~2&~3&~4)
+	?a <- (command ?alfa&~1&~2&~3&~4&~5)
 	
 	=>
 	(printout t " Optiune invalida" crlf)
