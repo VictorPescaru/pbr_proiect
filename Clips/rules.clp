@@ -263,8 +263,7 @@
 	(clear-window)
 	(printout t " ♦ Durate" crlf)
 	(printout t "   1 ► Durata unei note" crlf)
-	(printout t "   2 ►  " crlf)
-	(printout t "   3 ► " crlf)
+	(printout t "   2 ► Durata medie a melodiei " crlf)
 	(printout t crlf "   Optiune → ")
 	(assert(command3 (read)))
 	(retract ?x)
@@ -276,7 +275,7 @@
 	(bind ?*iterator2* (read))	
 	(printout t "   Order   → ")
 	(bind ?*iterator1* (read))
-	(assert (durataMedieAMelodiei ?*iterator1* ?*iterator2*))
+	(assert (durataMedieAUneiNote ?*iterator1* ?*iterator2*))
 	(retract ?a)
 )
 (deffunction computeDutarion
@@ -326,15 +325,15 @@
 	; (return ?*iterator5*)
 )
 
-(defrule durataMedieAMelodiei
-	?a <- (durataMedieAMelodiei ?order ?trackID)
+(defrule durataMedieAUneiNote
+	?a <- (durataMedieAUneiNote ?order ?trackID)
 	(event (order ?order) (trackID ?trackID) (delta ?delta) (tip "NoteOn") (data ?ch ?nt ?vl))
 	=>
 	(assert (durMed ?order ?trackID ?ch ?nt ?vl))
 	(bind ?*iterator1* 0)
 	(bind ?*iterator2* 0)
 )
-(defrule durataMedieAMelodiei2
+(defrule durataMedieAUneiNote2
 	?a <- (durMed ?order ?trackID ?d1 ?d2 ?d3)
 	(event (order ?order2) (trackID ?trackID) (delta ?delta2) (tip ?tip) (data ?ch ?nt ?))
 	(test (eq ?order2 (+ ?order ?*iterator1*)))
@@ -345,7 +344,6 @@
 		(assert (durMed ?order ?trackID ?d1 ?d2 ?d3))
 		else
 		(bind ?*iterator1* (+ ?*iterator1* 1))
-		
 		(bind ?*iterator2* (+ ?*iterator2* ?delta2 ))
 		(if 
 		(and (eq ?tip "NoteOff") 
@@ -357,12 +355,68 @@
 			(printout t  "   Durata  → " ?*iterator2* crlf)
 			(assert (backToMenu))
 			else
-	(retract ?a)
-	(assert (durMed ?order ?trackID ?d1 ?d2 ?d3))
-	)
+				(retract ?a)
+				(assert (durMed ?order ?trackID ?d1 ?d2 ?d3))
+		)
 	)
 )
 
+(defrule executeComand3_2
+	?a <- (command3 2)
+	=>
+	(assert (durataMedieAMelodiei))
+	(retract ?a)
+	(bind ?*iterator3* 0)
+	(bind ?*iterator4* 0)
+)
+(defrule durataMedieAMelodiei
+	?a <-(durataMedieAMelodiei)
+	(event (order ?order) (trackID ?trackID) (delta ?delta) (tip "NoteOn") (data ?ch ?nt ?vel))
+	=>
+	(assert (durataMedieNota ?order ?trackID ?ch ?nt))
+	(bind ?*iterator1* 0)
+	(bind ?*iterator2* 0)
+	(bind ?*iterator4* (+ ?*iterator4* 1))
+)
+(defrule durataMedieMelodiei2
+	?a <- (durataMedieNota ?order ?trackID ?d1 ?d2)
+	(event (order ?order2) (trackID ?trackID) (delta ?delta2) (tip ?tip) (data ?ch ?nt ?))
+	(test (eq ?order2 (+ ?order ?*iterator1*)))
+	=>
+	(if (= ?*iterator1* 0) then
+		(bind ?*iterator1* 1)
+		(retract ?a)
+		(assert (durataMedieNota ?order ?trackID ?d1 ?d2 ))
+		else
+		(bind ?*iterator1* (+ ?*iterator1* 1))
+		
+		(bind ?*iterator2* (+ ?*iterator2* ?delta2 ))
+		(if 
+		(and (eq ?tip "NoteOff") 
+				(eq ?d1 ?ch)
+				 (eq ?d2 ?nt))
+			
+			then
+			(retract ?a)
+			;(printout t  ?order"   Durata  → " ?*iterator2* crlf)
+			(bind ?*iterator3* (+ ?*iterator3* ?*iterator2*))
+			else
+				(retract ?a)
+				(assert (durataMedieNota ?order ?trackID ?d1 ?d2 ))
+		)
+	)
+)
+(defrule durataMedieMelodiei3
+	(declare (salience -100))
+	?a <-(durataMedieAMelodiei)
+	=>
+	(printout t "   Note in total → " ?*iterator4* crlf)
+	(printout t "   Total durata  → " ?*iterator3* " units" crlf)
+	(printout t "   Medie durata  → " (/ ?*iterator3* ?*iterator4* ) " units" crlf)
+	(retract ?a)
+	(assert (backToMenu))
+
+)
 
 
 (defrule executeCommandNone
